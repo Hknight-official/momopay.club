@@ -1,3 +1,6 @@
+<?php 
+	include("./api/config.php");
+?>
 <!DOCTYPE html>
 <html>
 
@@ -16,6 +19,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 </head>
 
 <body>
@@ -39,8 +43,21 @@
 							<tr>
 								<td colspan="2">
 									<center>
-										<p>»» Yêu cầu chuyển tiền có thời hạn là <span style="color:red;">30p</span> , số tiền bạn chuyển vào sẽ được cộng vào tài khoản với ck % </br>
+										<p>»» Yêu cầu chuyển tiền có thời hạn là <span style="color:red;">30p</span> , số tiền bạn chuyển vào sẽ được cộng vào tài khoản với ck <b><?=$ck?>%</b> </br>
 										»» Sau khi thực hiện xong thao tác chuyển tiền, vui lòng bấm nút <span style="color:red;">Hoàn Thành</span> Bên dưới!</p>
+									</center>
+								</td>
+							</tr>
+							<tr class="form_momo">
+								<td colspan="2">
+									<center>
+										<b>Dùng Momo Quét Mã QR Bên Dưới: </br>(Đừng quên nhập lời nhắn và điền số tiền chuyển)</b>
+										<img id="qrcode" src="" width="60%" />
+										<label><b style="color:#ff6600">Vui lòng ghi lời nhắn như bên dưới!</b></label>
+										<input type="text" id="content" style="width:50%" value="" name="content" class="form-control" required readonly/>
+										<input type="hidden" id="phone_nhan" value="" name="sdtnhan"  class="form-control" required readonly/>
+										<input type="hidden" id="tk_nhan" value="" name="name_nhan" class="form-control" required readonly/>
+										<input type="hidden" id="key_content" value="" name="key_content" class="form-control" required readonly/>
 									</center>
 								</td>
 							</tr>
@@ -49,73 +66,60 @@
 								<td><input type="text" id="username" class="form-control" name="username" required /></td>
 							</tr>
 							<tr class="form_momo">
-								<td><label>Tên Người Nhận:</label></td>
-								<td><input type="text" id="tk_nhan" value="" class="form-control" required disabled/></td>
-							</tr>
-							<tr class="form_momo">
-								<td><label>Số Điện Thoại Momo:</label></td>
-								<td><input type="text" id="phone_nhan" value="" class="form-control" required disabled/></td>
-							</tr>
-							<tr class="form_momo">
-								<td><label>Nội Dung:</label></td>
-								<td>
-									<label><small style="color:#ff6600">Vui lòng ghi giống như bên dưới!</small></label>
-									<input type="text" id="content" value="" class="form-control" required disabled/>
-								</td>
-							</tr>
-							<tr class="form_momo">
 								<td><label>Captcha:</label></td>
 								<td>
 									<center>
-										<p><b>Nhập những kí tự bạn thấy vào ô bên dưới !</b></p><img width="30%" id="captcha_code" src="./ajax/captcha_code.php" onclick="refreshCaptcha();" />
+										<p><b>Nhập những kí tự bạn thấy vào ô bên dưới !</b></p><img width="30%" id="captcha_code" src="/ajax/captcha_code.php" onclick="refreshCaptcha();" />
 										<input type="text" style="width:30%" name="captcha" id="captcha" class="demoInputBox">
 									</center>
 								</td>
 							</tr>
 							<tr>
-								<td colspan="2" align="center"><button type="button" id="general_form" class="btn btn-primary btn-block" name="submit">Tạo Yêu Cầu</button></td>
+								<td colspan="2" align="center"><button type="button" id="momo_button" class="btn btn-primary btn-block" name="submit">Tạo Yêu Cầu</button></td>
 							</tr>
 						</tbody>
 					</table>
 				</form>
 				<script type="text/javascript">
 				$('.form_momo').hide();
-
-					$("#general_form").click(function(e) {
-						$.ajax({
-							url: "/ajax/create_form.php",
-							type: 'post',
-							dataType: 'json',
-							data: $("#myform").serialize(),
-							success: function(data) {
-								$('#username').prop("disabled", true);
-								$("#tk_nhan").val(data.name);
-								$("#phone_nhan").val(data.phone);
-								$("#content").val(data.content);
-								$('.form_momo').show();
-								$("#general_form").html("Hoàn Thành");
-								$("#general_form").attr("id", "done_form");
-								refreshCaptcha();
-								$("#load_hs").load("./ajax/history.php");
-							}
-						});
-
-					});
-
-					$("#done_form").click(function(e) {
-						$("#status").html("<img src='/assets/load.gif' width='30%' />");
-						$.ajax({
-							url: "/ajax/card.php",
-							type: 'post',
-							data: $("#myform").serialize(),
-							success: function(data) {
-								$("#status").html(data);
-								refreshCaptcha();
-								document.getElementById("myform").reset();
-								$("#load_hs").load("/ajax/history.php");
-							}
-						});
-
+					var type_form = 0;
+					$("#momo_button").click(function(e) {
+						if (type_form == 0){
+							$.ajax({
+								url: "/ajax/create_form.php",
+								type: 'post',
+								dataType: 'json',
+								data: $("#myform").serialize(),
+								success: function(data) {
+									$('#username').prop("readonly", true);
+									$("#tk_nhan").val(data.name);
+									$("#phone_nhan").val(data.phone);
+									$("#content").val(data.content);
+									$("#key_content").val(data.key_content);
+									$('.form_momo').show();
+									$("#momo_button").removeClass('btn-primary').addClass('btn-success');
+									$("#momo_button").html("Hoàn Thành");
+									let momo_trans_qr = "2|99|"+data.phone+"|"+data.name+"|momopay@club.com|0|0|10|20";
+									$("#qrcode").attr("src", "https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl="+momo_trans_qr);
+									refreshCaptcha();
+									$("#load_hs").load("/ajax/history.php");
+									type_form = 1;
+								}
+							});
+						} else {
+							$("#status").html("<img src='/assets/load.gif' width='30%' />");
+							$.ajax({
+								url: "/ajax/done.php",
+								type: 'post',
+								data: $("#myform").serialize(),
+								success: function(data) {
+									$("#status").html(data);
+									refreshCaptcha();
+									document.getElementById("myform").reset();
+									$("#load_hs").load("/ajax/history.php");
+								}
+							});
+						}
 					});
 
 

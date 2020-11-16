@@ -2,9 +2,8 @@
 	<thead>
 		<tr bgcolor="4682B4" style="color:white">
 		  <th scope="col">STT</th>
-		  <th scope="col">Tên Game</th>
-		  <th scope="col">Mệnh Giá</th>
-		  <th scope="col">Thẻ</th>
+		  <th scope="col">Username</th>
+		  <th scope="col">Tiền Gửi</th>
 		  <th scope="col">Trạng Thái</th>
 		  <th scope="col">Thời Gian </th>
 		</tr>
@@ -19,17 +18,14 @@ if($query->num_rows > 0){
 			$status = '<span class="badge badge-success" style="font-size:100%;color:white;">Thành Công</span>';
 	    } else if ($row['status'] == 2){
 			$status = '<span class="badge badge-danger" style="font-size:100%;color:white;">Thất Bại</span>';
-		} else if ($row['status'] == 3){
-			$status = '<span class="badge badge-info" style="font-size:100%;color:white;">Sai Mệnh Giá</span>';
 		} else {
 		    $status = '<span class="badge badge-info" style="font-size:100%;color:white;">Chờ Duyệt</span>';
 		}
 		echo '
 	    <tbody>
 			<td>'.$row['id'].'</td>
-			<td>'.$row['name'].'</td>
+			<td>'.$row['username'].'</td>
 			<td>'.number_format($row['amount']).'đ</td>
-			<td>'.$row['type'].'</td>
 			<td>'.$status.'</td>
 			<td>'.$row['date'].'</td>
 		</tbody>
