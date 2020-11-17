@@ -116,6 +116,11 @@
 									$("#status").html(data);
 									refreshCaptcha();
 									$("#load_hs").load("/ajax/history.php");
+                                                                        $('.form_momo').hide();
+                                                                        type_form = 0;
+                                                                        $("#myform")[0].reset();
+									$("#momo_button").removeClass('btn-success').addClass('btn-primary');
+									$("#momo_button").html("Tạo Yêu Cầu");
 								}
 							});
 						}
