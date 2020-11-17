@@ -12,7 +12,7 @@ if($validate != false) {
 	$ghichu = $validate['ghichu']; 
 	
 	if($apikey == $apikey) {		
-		$result = $conn->query("SELECT * FROM `trans_log` WHERE `status` = 0 AND `trans_id` = '{$ghichu}' AND `content` = '{$noidung}' AND`sdtnhan` = '{$sdtnhan}'");
+		$result = $conn->query("SELECT * FROM `momo_log` WHERE `status` = 0 AND `trans_id` = '{$ghichu}' AND `trans_id` = '{$noidung}' AND `sdtnhan` = '{$sdtnhan}'");
 	
 		if ($result->num_rows > 0){
 			$result = $result->fetch_array(MYSQLI_ASSOC);
