@@ -22,7 +22,7 @@ if($validate != false) {
 			#[!] Lưu log Nạp Thẻ 
 			$file = "momo.log";
 			$fh = fopen($file,'a') or die("cant open file");
-			fwrite($fh,"Tai khoan: ".$row['username'].", data: ".json_encode($_POST));
+			fwrite($fh,"Tai khoan: ".$result['username'].", data: ".json_encode($_POST));
 			fwrite($fh,"\r\n");
 			fclose($fh);
 		}
