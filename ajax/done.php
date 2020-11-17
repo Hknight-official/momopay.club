@@ -4,7 +4,7 @@ include(__DIR__ ."/../api/config.php");
 if($_POST["captcha"] != $_SESSION["captcha_code"]){
 	exit('<script type="text/javascript">toastr.error("Xác nhận captcha không đúng !");</script>');
 }
-
+sleep(5);
 $username = $conn->real_escape_string(strip_tags(addslashes($_POST['username']))); 
 $sdtnhan = $conn->real_escape_string(strip_tags(addslashes($_POST['sdtnhan']))); 
 $name_nhan = $conn->real_escape_string(strip_tags(addslashes($_POST['name_nhan']))); 
