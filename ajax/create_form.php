@@ -20,7 +20,7 @@ if ($query->num_rows > 0){
 
         $url = file_get_contents("https://momopay.club/API/get_phone.php?apikey={$apikey}&type=momo&ghichu=".$content);
         $obj = json_decode($url, true);
-        $obj['key_content'] = hash("sha256", $content);
+        $obj['key_content'] = $content;
         $conn->query("INSERT INTO `trans_log`(`username`, `amount`, `sdtnhan`, `sdtgui`, `name_nhan`, `status`, `trans_id`, `ghichu`)
          VALUES ('{$username}', 0, '{$obj['phone']}', NULL, '{$obj['name']}', 0, '{$obj['content']}', '{$content}')");
         exit(json_encode($obj)); 
