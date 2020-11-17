@@ -112,15 +112,25 @@
 								url: "/ajax/done.php",
 								type: 'post',
 								data: $("#myform").serialize(),
+								dataType: 'json',
 								success: function(data) {
 									$("#status").html(data);
 									refreshCaptcha();
-									$("#load_hs").load("/ajax/history.php");
-                                                                        $('.form_momo').hide();
-                                                                        type_form = 0;
-                                                                        $("#myform")[0].reset();
-									$("#momo_button").removeClass('btn-success').addClass('btn-primary');
-									$("#momo_button").html("Tạo Yêu Cầu");
+									if (data.status == 1){
+										swal("Thành Công", data.msg, "success");
+									        $("#load_hs").load("/ajax/history.php");
+										$('.form_momo').hide();
+										type_form = 0;
+										$('#username').prop("readonly", false);
+										$("#tk_nhan").val();
+										$("#phone_nhan").val();
+										$("#content").val();
+										$("#key_content").val();
+										$("#momo_button").removeClass('btn-success').addClass('btn-primary');
+										$("#momo_button").html("Tạo Yêu Cầu");
+									} else {
+									toastr.error(data.msg);
+									}
 								}
 							});
 						}
