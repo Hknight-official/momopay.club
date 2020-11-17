@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 17, 2019 lúc 12:42 PM
--- Phiên bản máy phục vụ: 10.1.38-MariaDB
--- Phiên bản PHP: 7.3.2
+-- Thời gian đã tạo: Th10 17, 2020 lúc 02:28 PM
+-- Phiên bản máy phục vụ: 10.4.11-MariaDB
+-- Phiên bản PHP: 7.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `ars`
+-- Cơ sở dữ liệu: `momopay`
 --
 
 -- --------------------------------------------------------
@@ -30,22 +30,23 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `trans_log` (
   `id` int(11) NOT NULL,
-  `name` text NOT NULL,
-  `amount` bigint(20) NOT NULL,
-  `seri` text NOT NULL,
-  `pin` text NOT NULL,
-  `type` text NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `username` text NOT NULL,
+  `amount` bigint(20) NOT NULL DEFAULT 0,
+  `sdtnhan` text DEFAULT NULL,
+  `sdtgui` text DEFAULT NULL,
+  `name_nhan` text CHARACTER SET utf8 DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
   `trans_id` text NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `ghichu` text DEFAULT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Đang đổ dữ liệu cho bảng `trans_log`
 --
 
-INSERT INTO `trans_log` (`id`, `name`, `amount`, `seri`, `pin`, `type`, `status`, `trans_id`, `date`) VALUES
-(1, 'test', 20000, '8654235125432', '436346252225', 'Viettel', 2, '3316', '2019-05-17 10:11:03');
+INSERT INTO `trans_log` (`id`, `username`, `amount`, `sdtnhan`, `sdtgui`, `name_nhan`, `status`, `trans_id`, `ghichu`, `date`) VALUES
+(9, 'hackerkillT', 0, '0976469520', NULL, 'NGUYEN THI THAO', 1, '5n209e', 'e7bf633d4d9ad8f07465f2fb592c35ec', '2020-11-17 13:23:13');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -65,7 +66,7 @@ ALTER TABLE `trans_log`
 -- AUTO_INCREMENT cho bảng `trans_log`
 --
 ALTER TABLE `trans_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

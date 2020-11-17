@@ -43,7 +43,7 @@
 							<tr>
 								<td colspan="2">
 									<center>
-										<p>»» Yêu cầu chuyển tiền có thời hạn là <span style="color:red;">30p</span> , số tiền bạn chuyển vào sẽ được cộng vào tài khoản với ck <b><?=$ck?>%</b> </br>
+										<p>»» Yêu cầu chuyển tiền có thời hạn là <span style="color:red;">20p</span> , số tiền bạn chuyển vào sẽ được cộng vào tài khoản với ck <b><?=$ck?>%</b> </br>
 										»» Sau khi thực hiện xong thao tác chuyển tiền, vui lòng bấm nút <span style="color:red;">Hoàn Thành</span> Bên dưới!</p>
 									</center>
 								</td>
@@ -115,7 +115,6 @@
 								success: function(data) {
 									$("#status").html(data);
 									refreshCaptcha();
-									document.getElementById("myform").reset();
 									$("#load_hs").load("/ajax/history.php");
 								}
 							});

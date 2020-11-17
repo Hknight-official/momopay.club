@@ -10,5 +10,6 @@
 	# đừng đụng vào 
   $conn = new mysqli($local_db, $user_db, $pass_db, $name_db);
   $conn->set_charset("utf8");
+  $conn->query("DELETE FROM `trans_log` WHERE `status` = 0 AND (`date` + INTERVAL 20 MINUTE) < NOW();");
     
 ?>

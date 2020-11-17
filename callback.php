@@ -17,7 +17,7 @@ if($validate != false) {
 		if ($result->num_rows > 0){
 			$result = $result->fetch_array(MYSQLI_ASSOC);
 			print_r($result);
-			$conn->query("UPDATE trans_log SET status = 1 WHERE id = {$result['id']}");
+			$conn->query("UPDATE trans_log SET `status` = 1, `amount` = {$amount}, `sdtgui` = '{$sdtgui}' WHERE id = {$result['id']}");
 			
 			#[!] Lưu log Nạp Thẻ 
 			$file = "momo.log";

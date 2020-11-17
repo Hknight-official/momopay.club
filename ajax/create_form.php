@@ -6,7 +6,17 @@ if (!isset($_POST['username'])){
 }
 
 $content = md5(time() . rand(0, 999999));
-$username = $conn->real_escape_string(strip_tags(addslashes($_POST['username']))); // string
+$username = $conn->real_escape_string(strip_tags(addslashes($_POST['username']))); 
+$query = $conn->query("SELECT * FROM `trans_log` WHERE `status` = 0 AND `username` = '{$username}'");
+if ($query->num_rows > 0){
+        $row = $query->fetch_assoc();
+        exit(json_encode([
+                "name" => $row['name_nhan'],
+                "phone" => $row['sdtnhan'],
+                "content" => $row['trans_id'],
+                "key_content" => $row['ghichu']
+        ])); 
+}
 
         $url = file_get_contents("https://momopay.club/API/get_phone.php?apikey={$apikey}&type=momo&ghichu=".$content);
         $obj = json_decode($url, true);
