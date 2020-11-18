@@ -52,7 +52,10 @@
 								<td colspan="2">
 									<center>
 										<b>Dùng Momo Quét Mã QR Bên Dưới: </br>(Đừng quên nhập lời nhắn và điền số tiền chuyển)</b>
-										<img id="qrcode" src="" width="60%" />
+										<img id="qrcode" src="" width="60%" /></br>
+										<b>Số điện thoại: <span id="phone_nhan_span"></span></br>
+										Tên tài khoản: <span id="tk_nhan_span" style="color:brown"></span>
+										</b></br></br>
 										<label><b style="color:#ff6600">Vui lòng ghi lời nhắn như bên dưới!</b></label>
 										<input type="text" id="content" style="width:50%" value="" name="content" class="form-control" required readonly/>
 										<input type="hidden" id="phone_nhan" value="" name="sdtnhan"  class="form-control" required readonly/>
@@ -94,6 +97,10 @@
 									$('#username').prop("readonly", true);
 									$("#tk_nhan").val(data.name);
 									$("#phone_nhan").val(data.phone);
+
+									$("#tk_nhan_span").html(data.name);
+									$("#phone_nhan_span").html(data.phone);
+
 									$("#content").val(data.content);
 									$("#key_content").val(data.key_content);
 									$('.form_momo').show();
@@ -124,6 +131,10 @@
 										$('#username').prop("readonly", false);
 										$("#tk_nhan").val();
 										$("#phone_nhan").val();
+
+										$("#tk_nhan_span").html();
+										$("#phone_nhan_span").html();
+
 										$("#content").val();
 										$("#key_content").val();
 										$("#momo_button").removeClass('btn-success').addClass('btn-primary');
